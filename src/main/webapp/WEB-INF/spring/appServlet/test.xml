@@ -11,6 +11,7 @@
 		http://www.springframework.org/schema/context 
 		https://www.springframework.org/schema/context/spring-context.xsd">
 		
+		<beans:bean id="sampleDTO" class="test.spring.mvc.bean.SampleDTO"/>
 		<context:component-scan base-package="ex.framework.mvc" />
 		
 </beans:beans>
