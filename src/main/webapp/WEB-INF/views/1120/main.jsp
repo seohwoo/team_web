@@ -7,12 +7,14 @@
     <body>
     	<h1>/1120/main.jsp</h1>
     	<h1>SpringFrame MVC..!!</h1>
-    	<h2>name = ${dto.name }</h2>
-    	<h2>number = ${dto.number }</h2>
-    	<h2>day = ${dto.day }</h2>
-    	<h2>a = ${a }</h2>
-    	<h2>b = ${b }</h2>
-    	
+    	<h3>name = ${dto.name }</h3>
+    	<h3>number = ${dto.number }</h3>
+    	<h3>day = ${dto.day }</h3>
+    	<h3>a = ${a }</h3>
+    	<h3>b = ${b }</h3>
+    	<h3>name = ${sampleDTO.name }</h3>
+    	<h3>number = ${sampleDTO.number }</h3>
+    	<h3>day = ${sampleDTO.day }</h3>
     </body>
 </html>
 

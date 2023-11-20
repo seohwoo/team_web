@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.mvc.bean.SampleDTO;
 
+/**
+ * form.jsp -> main.jsp로 parameter를 보내는 클래스
+ * */
 @Controller
 @RequestMapping("1120/*") //해당 클래스의 모든 매핑 적용
 public class SampleController {
