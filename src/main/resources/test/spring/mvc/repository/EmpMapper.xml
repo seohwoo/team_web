@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="test.spring.mvc.repository.EmpMapper">
+    	<select id="test1" resultType="test.spring.mvc.bean.EmpDTO">
+    		select * from freemember
+    	</select>
+    	<insert id="test2" parameterType="test.spring.mvc.bean.EmpDTO">
+    		insert into freemember values(#{id}, #{passwd}, #{name}, #{jumin1}, #{jumin2}, #{email}, #{blog}, sysdate)
+    	</insert>
+    
+    </mapper>
