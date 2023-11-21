@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mvc.repository.BoardMapper">
+	<select id="showBoard" resultType="test.spring.mvc.bean.BoardDTO">
+		select * from board order by num desc
+	</select>
+	<insert id="insertBoard" parameterType="test.spring.mvc.bean.BoardDTO">
+		insert into board values(
+				board_seq.NEXTVAL,
+				#{writer},
+				#{title},
+				#{content},
+				sysdate,
+				#{save},
+				#{count}
+		)
+	</insert>
+</mapper>    
