@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mvc.repository.EmpMapper">
+	<select id="all" resultType="test.spring.mvc.bean.EmpDTO">
+		select * from emp
+	</select>
+	<!-- resultType은 생략 가능하다. -->
+	<select id="allEmpno" resultType="int">
+		select empno from emp
+	</select>
+	<insert id="insertEmp" parameterType="test.spring.mvc.bean.EmpDTO">
+		insert into emp values(
+				#{empno}, 
+				#{ename},
+				#{job},
+				#{mgr},
+				sysdate,
+				#{sal},
+				#{comm},
+				#{deptno}
+		)
+	</insert>
+</mapper>    
+    
