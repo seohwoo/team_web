@@ -12,25 +12,42 @@
 	
 	<!-- Application Loggers -->
 	<logger name="test.spring.mvc">
-		<level value="info" />
+		<level value="debug" />
+	</logger>
+	
+	<logger name="ex.framework.mvc">
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
+	
+	<logger name="jdbc.audit">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.conection">
+		<level value="warn" />
+	</logger>
+	
+	<logger name="jdbc.resultset">
+		<level value="warn" />
+	</logger>
+	
 
 	<!-- Root Logger -->
 	<root>
