@@ -3,8 +3,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="test.spring.mvc.repository.EmpMapper">
-	<select id="all" resultType="test.spring.mvc.bean.EmpDTO">
+	<sql id="empAll">
 		select * from emp
+	</sql>
+	<sql id="whereEmpno">
+		where empno=#{empno}
+	</sql>
+	<select id="all" parameterType="int" resultType="test.spring.mvc.bean.EmpDTO">
+		<include refid="empAll" />
+		<include refid="whereEmpno" />
 	</select>
 	<!-- resultType은 생략 가능하다. -->
 	<select id="allEmpno" resultType="int">

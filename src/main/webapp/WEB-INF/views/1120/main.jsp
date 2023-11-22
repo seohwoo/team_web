@@ -2,19 +2,19 @@
 <%@ page session="false" %>
 <html>
     <head>
-        <title>main.jsp</title>
+        <title>main</title>
     </head>
     <body>
     	<h1>/1120/main.jsp</h1>
     	<h1>SpringFrame MVC..!!</h1>
-    	<h3>name = ${dto.name }</h3>
-    	<h3>number = ${dto.number }</h3>
-    	<h3>day = ${dto.day }</h3>
-    	<h3>a = ${a }</h3>
-    	<h3>b = ${b }</h3>
+    	
     	<h3>name = ${sampleDTO.name }</h3>
     	<h3>number = ${sampleDTO.number }</h3>
-    	<h3>day = ${sampleDTO.day }</h3>
+    	
+    	<h3>name = ${name }</h3>
+    	<h3>number = ${number }</h3>
+    	
+    	<h2>msg = ${msg }</h2>
     </body>
 </html>
 
