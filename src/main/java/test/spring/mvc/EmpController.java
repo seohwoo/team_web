@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import test.spring.mvc.bean.EmpDTO;
+import test.spring.mvc.service.CrudService;
 import test.spring.mvc.service.EmpServiceImpl;
 
 @Controller
@@ -20,8 +21,10 @@ public class EmpController {
 	private static final Logger logger = LoggerFactory.getLogger(EmpController.class);
 	
 	@Autowired
-	private EmpServiceImpl service;
+	private CrudService emp;
+	private CrudService free;
 	
+	/*
 	@RequestMapping("read.do")
 	public String read(Model model) {
 		List<EmpDTO> list = service.read();
@@ -48,6 +51,7 @@ public class EmpController {
 		logger.info("==emp insert==> "+r);
 		return "실행 결과=" + r;
 	}
+	*/
 	@RequestMapping("form.do")
 	public String form() {
 		return "emp/form";
