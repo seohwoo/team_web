@@ -15,7 +15,7 @@
 		<level value="info" />
 	</logger>
 	
-	<logger name="ex.framework.mvc">
+	<logger name="ex.framework.mvc"> 
 		<level value="info" />
 	</logger>
 	
