@@ -90,7 +90,6 @@ public class MemberController {
 		List<GradeDTO> gradeList = memberServiceImpl.allStatus();
 		model.addAttribute("userList", userList);
 		model.addAttribute("gradeList", gradeList);
-		model.addAttribute("memberServiceImpl", memberServiceImpl);
 		return "member/adminShowUsers";
 	}
 	
@@ -101,12 +100,13 @@ public class MemberController {
 		model.addAttribute("id", id);
 		return "member/adminModifyUsersForm";
 	}
+	
 	@RequestMapping("adminModifyUsersPro.me")
-	public String adminModifyUsersPro(String status, String id, Model model) {
-		memberServiceImpl.changeStatus(status, id);
-		String statusname = memberServiceImpl.userStatus(Integer.parseInt(status));
+	public String adminModifyUsersPro(MemberDTO dto, Model model) {
+		memberServiceImpl.changeStatus(dto);
+		String statusname = memberServiceImpl.userStatus(dto.getStatus());
 		model.addAttribute("statusname", statusname);
-		model.addAttribute("id", id);
+		model.addAttribute("id", dto.getId());
 		return "member/adminModifyUsersPro";
 	}
 	

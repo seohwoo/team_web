@@ -18,5 +18,5 @@ public interface MemberMapper {
 	public List<MemberDTO> showAll();
 	public String userStatus(int status);
 	public List<GradeDTO> allStatus();
-	public void changeStatus(@Param("status")String status,@Param("id") String id);
+	public void changeStatus(MemberDTO dto);
 }

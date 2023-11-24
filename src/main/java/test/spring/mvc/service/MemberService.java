@@ -16,5 +16,5 @@ public interface MemberService {
 	public List<MemberDTO> showAll();
 	public String userStatus(int status);
 	public List<GradeDTO> allStatus();
-	public void changeStatus(String status, String id);
+	public void changeStatus(MemberDTO dto);
 }

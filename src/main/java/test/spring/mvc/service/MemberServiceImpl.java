@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void changeStatus(String status, String id) {
-		mapper.changeStatus(status, id);
+	public void changeStatus(MemberDTO dto) {
+		mapper.changeStatus(dto);
 	}
 }

@@ -35,7 +35,7 @@
 	<select id="allStatus" resultType="test.spring.mvc.bean.GradeDTO">
 		select * from grade order by status desc
 	</select>
-	<update id="changeStatus" parameterType="String">
+	<update id="changeStatus" parameterType="test.spring.mvc.bean.MemberDTO">
 		update freemember set status=#{status} where id=#{id}
 	</update>
 	
