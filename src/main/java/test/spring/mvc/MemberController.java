@@ -1,5 +1,4 @@
 package test.spring.mvc;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import test.spring.mvc.bean.MemberDTO;
 import test.spring.mvc.service.MemberService;
-
 @Controller
 @RequestMapping("/user/*")
 public class MemberController {
@@ -23,17 +21,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("loginPro.me")
-	public String loginPro(MemberDTO dto, Model model) {
-		int check = service.loginCheck(dto);
-		model.addAttribute("check", check);
-		
+	public String loginPro(MemberDTO dto , Model model) {	
+		int status = service.loginCheck(dto);
+		model.addAttribute("status" , status);
 		return "member/loginPro";
 	}
-	
 	@RequestMapping("logout.me")
-	public String logout(HttpSession session) {
-		session.invalidate(); // 전체 삭제
-		//session.removeAttribute("memId"); // 해당 아이디 삭제 
+	public String logout(HttpSession session) {	
+		session.invalidate();  // 전체 삭제
+		//session.removeAttribute("memId"); // 해당 이름 삭제 
 		return "redirect:/user/main.me";
 	}
 	
@@ -41,18 +37,17 @@ public class MemberController {
 	public String modify() {
 		return "member/modify";
 	}
-	
 	@RequestMapping("modifyForm.me")
-	public String modifyForm(HttpSession session, Model model) {
-		String id = (String)session.getAttribute("memId");
+	public String modifyForm(HttpSession session , Model model) {
+		String id =(String)session.getAttribute("memId");
 		MemberDTO dto = service.getUser(id);
-		model.addAttribute("dto", dto);
+		model.addAttribute("dto",dto);
 		return "member/modifyForm";
 	}
 	
 	@RequestMapping("modifyPro.me")
-	public String modifyPro(HttpSession session, MemberDTO dto, Model model) {
-		String id = (String)session.getAttribute("memId");
+	public String modifyPro(HttpSession session,MemberDTO dto, Model model) {
+		String id =(String)session.getAttribute("memId");
 		dto.setId(id);
 		service.userUpdate(dto);
 		return "member/modifyPro";
@@ -64,41 +59,34 @@ public class MemberController {
 	}
 	
 	@RequestMapping("deletePro.me")
-	public String deletePro(HttpSession session, Model model, String passwd) {
-		String id = (String)session.getAttribute("memId");
+	public String deletePro(Model model , String passwd , HttpSession session) {
+		String id =(String)session.getAttribute("memId");
 		int check = service.userDelete(id, passwd);
 		if(check == 1) {
 			session.invalidate();
 		}
-		model.addAttribute("check", check);
-		
+		model.addAttribute("check",check);
 		return "member/deletePro";
 	}
 	
-	//
-	
-	
-	@RequestMapping("inputForm.me")
-	public String inputForm(MemberDTO dto, Model model) {
-		
-		model.addAttribute("dto", dto);
-		
-		return "member/inputForm";
+	@RequestMapping("userList.me")
+	public String userList(Model model) {
+		model.addAttribute("list" ,service.userAll());	
+		return "member/memberList";
 	}
 	
-	@RequestMapping("inputPro.me")
-	public String inputPro() {
-		
-		return "member/inputPro";
+	@RequestMapping("statusChange.me")
+	public String statusChange(MemberDTO dto) {
+		service.statusChange(dto);
+		return "redirect:/user/userList.me";
 	}
-	
-	@RequestMapping("admin.me")
-	public String admin() {
-		 return "member/admin";
-	}
-	
 	
 }
+
+
+
+
+
 
 
 

@@ -1,13 +1,15 @@
 package test.spring.mvc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.spring.mvc.bean.MemberDTO;
 import test.spring.mvc.repository.MemberMapper;
 
 @Service
-public class MemberServiceImpl implements MemberService {
-
+public class MemberServiceImpl implements MemberService{
+	
 	@Autowired
 	private MemberMapper mapper;
 	
@@ -18,7 +20,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void userInput(MemberDTO dto) {
-		 
 	}
 
 	@Override
@@ -35,18 +36,25 @@ public class MemberServiceImpl implements MemberService {
 	public int userDelete(String id, String passwd) {
 		return mapper.statusChange(id, passwd);
 	}
-	
-	//
+
 	@Override
-	public void inputForm(MemberDTO dto) {
-		mapper.memberInsert(dto);
+	public List<MemberDTO> userAll() {
+		return mapper.memberList();
 	}
 
 	@Override
-	public void admin(MemberDTO dto) {
-		// TODO Auto-generated method stub
-		
+	public int statusChange(MemberDTO dto) {
+		return mapper.statusAdminChange(dto);
 	}
-
 
 }
+
+
+
+
+
+
+
+
+
+

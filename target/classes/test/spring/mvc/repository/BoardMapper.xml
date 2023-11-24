@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="test.spring.mvc.repository.BoardMapper">
+	
+	<select id="count" resultType="int">
+		select count(*) from freeboard
+	</select>
+	
+	  
+	
+	<!-- CDATA 등호 문자로 인식하게 해줌 -->
+	<select id="list"  parameterType="hashmap" resultType="test.spring.mvc.bean.BoardDTO"> 
+	<![CDATA[
+		select * from 
+		(select b.* , rownum r from 
+		(select * from freeboard order by ref desc , re_step asc) b)
+		where r >= #{start} and r <= #{end}
+	]]>
+	</select>
+	
+	
+	<!-- NVL (max(num),0) : num값이 null일 때 0으로 처리해주는 코드 -->
+	<select id="maxNum" resultType="int">
+		select NVL(max(num),0) from freeboard
+	</select>
+	
+	<update id="writeUpdate" parameterType="test.spring.mvc.bean.BoardDTO">
+	<![CDATA[	
+		update freeboard set re_step=re_step+1 where ref=#{ref} and re_step > #{re_step}
+	]]>
+	</update>
+	
+	<insert id="writeInsert" parameterType="test.spring.mvc.bean.BoardDTO">
+		insert into freeboard(num, writer, email, subject, passwd, reg_date, ref, re_step, re_level, content, ip) 
+		values(freeboard_seq.NEXTVAL, #{writer}, #{email}, #{subject}, #{passwd}, 
+		sysdate, #{ref}, #{re_step}, #{re_level}, #{content}, #{ip} )
+	</insert>
+	
+	
+	
+	
+</mapper>

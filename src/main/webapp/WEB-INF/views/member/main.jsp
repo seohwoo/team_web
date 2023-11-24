@@ -47,7 +47,10 @@
              <form  method="post" action="/user/logout.me">  
              <input type="submit"  value="로그아웃">
              <input type="button" value="회원정보변경" onclick="javascript:window.location='/user/modify.me'">
-             <input type="button" value="유저 정보" onclick="javascript:window.location='/user/admin.me'">
+             <c:if test="${sessionScope.status == 10}">
+             <input type="button" value="회원 목록" onclick="javascript:window.location='/user/userList.me'">
+             </c:if>
+             
              </form>
          </td>
         </tr>
