@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.spring.mvc.repository.BoardMapper">
+	<select id="listCount" resultType="int">
+		select count(*) from freeboard
+	</select>
+	<!--  <![CDATA[...]] : 특수문지(>,<)를 sql문으로 사용할 수 있는 방법 -->
+	<select id="showList" parameterType="hashmap" resultType="test.spring.mvc.bean.BoardDTO">
+		<![CDATA[
+			select * from 
+			(select b.*, rownum r from 
+			(select * from freeboard order by reg_date desc, ref desc, re_step asc) b) 
+			where r >= #{start} and r <= #{end}
+		]]>
+	</select>
+	<select id="maxNum" resultType="int">
+		select NVL(max(num), 0) from freeboard
+	</select>
+	<update id="writeUpdate" parameterType="test.spring.mvc.bean.BoardDTO" >
+		<![CDATA[
+			update freeboard set re_step=re_step+1 
+			where ref=#{ref} and re_step > #{re_step}
+		]]>
+	</update>
+	<insert id="writeInsert" parameterType="test.spring.mvc.bean.BoardDTO">
+		insert into freeboard
+		(num, writer, email, subject, passwd, reg_date, content, ip, ref, re_step, re_level) values(
+			freeboard_seq.NEXTVAL,
+			#{writer},
+			#{email},
+			#{subject},
+			#{passwd},
+			sysdate,
+			#{content},
+			#{ip},
+			#{ref},
+			#{re_step},
+			#{re_level}
+		)	
+	</insert>
+</mapper>    
+    
