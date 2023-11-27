@@ -18,4 +18,5 @@ public class MemberDTO {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date reg_date;	// DateTimeFormat : 날짜 패턴 지정
 	private int status;
+	private String img;
 }

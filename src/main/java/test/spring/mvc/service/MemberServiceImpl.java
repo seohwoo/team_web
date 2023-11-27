@@ -63,4 +63,9 @@ public class MemberServiceImpl implements MemberService{
 	public void changeStatus(MemberDTO dto) {
 		mapper.changeStatus(dto);
 	}
+
+	@Override
+	public void changeImg(String id, String img) {
+		mapper.changeImg(id, img);
+	}
 }

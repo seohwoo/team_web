@@ -17,4 +17,5 @@ public interface MemberService {
 	public String userStatus(int status);
 	public List<GradeDTO> allStatus();
 	public void changeStatus(MemberDTO dto);
+	public void changeImg(String id, String img);
 }

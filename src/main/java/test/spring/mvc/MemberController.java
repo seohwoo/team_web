@@ -1,8 +1,10 @@
 package test.spring.mvc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.GradeDTO;
 import test.spring.mvc.bean.MemberDTO;
@@ -50,7 +53,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("modify.me")
-	public String modify() {
+	public String modify(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("memId");
+		MemberDTO dto =  memberServiceImpl.getUser(id);
+		model.addAttribute("dto", dto);
 		return "member/modify";
 	}
 	
@@ -68,6 +74,28 @@ public class MemberController {
 		dto.setId(id);
 		memberServiceImpl.userUpdate(dto);
 		return "member/modifyPro";
+	}
+	
+	@RequestMapping("uploadForm.me")
+	public String uploadForm() {
+		return "member/uploadForm";
+	}
+	
+	@RequestMapping("uploadPro.me")
+	public String uploadPro(HttpSession session, HttpServletRequest request, MultipartFile upload) {
+		String id = (String) session.getAttribute("memId");
+		String img = upload.getOriginalFilename();
+		String filePath = request.getServletContext().getRealPath("/resources/file/user/");
+		if(upload.getContentType().split("/")[0].equals("image")) {
+			File copy = new File(filePath + img);	
+			try {
+				upload.transferTo(copy);
+				memberServiceImpl.changeImg(id, img); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "redirect:/user/modify.me";
 	}
 	
 	@RequestMapping("deleteForm.me")

@@ -46,7 +46,7 @@
              방문하셨습니다
              <form  method="post" action="/user/logout.me">  
              	<input type="submit"  value="로그아웃">
-             	<input type="button" value="회원정보변경" onclick="javascript:window.location='/user/modify.me'">
+             	<input type="button" value="내정보" onclick="javascript:window.location='/user/modify.me'">
              	 <c:if test="${admin == 10}">
              		<input type="button" value="전체회원보기" onclick="javascript:window.location='/user/adminShowUsers.me'">
             	 </c:if>
