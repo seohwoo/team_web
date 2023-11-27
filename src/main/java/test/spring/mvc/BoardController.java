@@ -1,7 +1,5 @@
 package test.spring.mvc;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -45,8 +43,48 @@ public class BoardController {
 	
 	@RequestMapping("writePro")
 	public String writePro(BoardDTO dto, HttpServletRequest request) {
-		dto.setIp(request.getRemoteAddr());
+		dto.setIp(request.getRemoteAddr());	//IP ют╥б
 		boardServiceImpl.create(dto);
 		return "redirect:/free/list";
 	}
+	
+	@RequestMapping("content")
+	public String content(Model model, int num, int pageNum) {
+		BoardDTO dto = boardServiceImpl.readContent(num);
+		model.addAttribute("article", dto);
+		model.addAttribute("pageNum", pageNum);
+		return "/board/content";
+	}
+	
+	@RequestMapping("updateForm")
+	public String updateForm(Model model, int num, int pageNum) {
+		BoardDTO dto = boardServiceImpl.update(num);
+		model.addAttribute("article", dto);
+		model.addAttribute("pageNum", pageNum);
+		return "/board/updateForm";
+	}
+	
+	@RequestMapping("updatePro")
+	public String updatePro(Model model, BoardDTO dto, int pageNum) {
+		int check = boardServiceImpl.updateArticle(dto);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("check", check);
+		return "/board/updatePro";
+	}
+	
+	@RequestMapping("deleteForm")
+	public String deleteForm(Model model, int num, int pageNum) {
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+		return "/board/deleteForm";
+	}
+	
+	@RequestMapping("deletePro")
+	public String deletePro(Model model, int num, String passwd, int pageNum) {
+		int check = boardServiceImpl.deleteArticle(num, passwd);
+		model.addAttribute("check", check);
+		model.addAttribute("pageNum", pageNum);
+		return "/board/deletePro";
+	}
+	
 }

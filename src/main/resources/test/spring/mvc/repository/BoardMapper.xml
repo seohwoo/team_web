@@ -11,7 +11,7 @@
 		<![CDATA[
 			select * from 
 			(select b.*, rownum r from 
-			(select * from freeboard order by reg_date desc, ref desc, re_step asc) b) 
+			(select * from freeboard order by ref desc, re_step asc) b) 
 			where r >= #{start} and r <= #{end}
 		]]>
 	</select>
@@ -40,5 +40,33 @@
 			#{re_level}
 		)	
 	</insert>
+	
+	<update id="updateCountUp">
+		update freeboard set readcount=readcount+1 where num=#{num}
+	</update>
+	
+	<select id="readNum" resultType="test.spring.mvc.bean.BoardDTO">
+		select * from freeboard where num = #{num}
+	</select>
+	
+	<select id="readPasswd" resultType="String" parameterType="int">
+		select passwd from freeboard where num=#{num}
+	</select>
+	
+	<update id="updateNum" parameterType="test.spring.mvc.bean.BoardDTO">
+		update freeboard
+			<set>
+				<if test="writer != null">writer=#{writer},</if> 
+				<if test="subject != null">subject=#{subject},</if> 
+				<if test="email != null">email=#{email},</if> 
+				<if test="content != null">content=#{content},</if>
+				reg_date=sysdate 
+			</set>
+		where num=#{num}
+	</update>
+	
+	<delete id="deleteNum" parameterType="int">
+		delete from freeboard where num=#{num}
+	</delete>
+	
 </mapper>    
-    

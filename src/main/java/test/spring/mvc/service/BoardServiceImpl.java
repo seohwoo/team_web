@@ -70,4 +70,33 @@ public class BoardServiceImpl implements BoardService{
 		}
 		mapper.writeInsert(dto);
 	}
+
+	@Override
+	public BoardDTO readContent(int num) {
+		mapper.updateCountUp(num);
+		return mapper.readNum(num);
+	}
+
+	@Override
+	public BoardDTO update(int num) {
+		return mapper.readNum(num);
+	}
+
+	@Override
+	public int updateArticle(BoardDTO dto) {
+		int check = 0;
+		if(mapper.readPasswd(dto.getNum()).equals(dto.getPasswd())) {
+			check = mapper.updateNum(dto);
+		}
+		return check;
+	}
+
+	@Override
+	public int deleteArticle(int num, String passwd) {
+		int check = 0;
+		if(mapper.readPasswd(num).equals(passwd)) {
+			check = mapper.deleteNum(num);
+		}
+		return check;
+	}
 }

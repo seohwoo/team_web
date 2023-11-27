@@ -11,4 +11,9 @@ public interface BoardMapper {
 	public int maxNum();
 	public void writeUpdate(BoardDTO dto);
 	public void writeInsert(BoardDTO dto);
+	public void updateCountUp(int num);
+	public BoardDTO readNum(int num);
+	public int updateNum(BoardDTO dto);
+	public String readPasswd(int num);
+	public int deleteNum(int num);
 }
