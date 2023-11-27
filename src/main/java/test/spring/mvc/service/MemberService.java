@@ -11,6 +11,11 @@ public interface MemberService {
 	
 	public List<MemberDTO> userAll();
 	public int statusChange(MemberDTO dto);
+
+	// test
+	public void imgUpdate(String id, String img);
+	
+	
 }
 
 

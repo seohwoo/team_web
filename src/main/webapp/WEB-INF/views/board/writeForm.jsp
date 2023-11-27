@@ -23,7 +23,7 @@
 				<table width="400" border="1" cellspacing="0" cellpadding="0"  bgcolor="${bodyback_c}" align="center">
    					<tr>
 					    <td align="right" colspan="2" bgcolor="${value_c}">
-						    <a href="list.jsp"> 글목록</a> 
+						    <a href="/free/list"> 글목록</a> 
 					   </td>
    					</tr>
    

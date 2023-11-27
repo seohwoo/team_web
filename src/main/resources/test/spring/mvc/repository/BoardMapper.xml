@@ -40,6 +40,37 @@
 		sysdate, #{ref}, #{re_step}, #{re_level}, #{content}, #{ip} )
 	</insert>
 	
+	<update id="updateCountUp" >
+		update freeboard set readcount=readcount+1 where num = #{num}
+	</update>
+	
+	<select id="readNum" resultType="test.spring.mvc.bean.BoardDTO">
+		select * from freeboard where num = #{num}
+	</select>
+	
+	<!-- 컬럼에 따라 resultType이 달라짐(int, String, DTO) -->
+	<select id="readPasswd" resultType="String" parameterType="int">
+		select passwd from freeboard where num = #{num}
+	</select>
+
+	<update id="updateNum" parameterType="test.spring.mvc.bean.BoardDTO">
+		update freeboard
+			<set>
+				<if test="writer != null">writer=#{writer}, </if>
+				<if test="email != null">email=#{email}, </if>
+				<if test="subject != null">subject=#{subject}, </if>
+				<if test="content != null">content=#{content}, </if>
+				<if test="passwd != null">passwd=#{passwd} </if>
+			</set>
+		where num =#{num}
+	</update>	
+	
+	<delete id="deleteNum">
+		delete from freeboard where num=#{num}
+	</delete>
+	
+	
+	
 	
 	
 	

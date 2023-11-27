@@ -33,6 +33,11 @@
 		update freemember set status=#{status} where id=#{id}
 	</update>
 	
+	<!-- test -->
+	<update id="imgUpdate" parameterType="String">
+		update freemember set img=#{img} where id=#{id}
+	</update>
+	
 </mapper>
 
 

@@ -17,4 +17,12 @@ public interface MemberMapper {
 	// 파라미터를 여러개 보낼 때는 앞에 @Param 해줘야함 / 변수들을 xml에 #id,passwd 넣는다
 	public int statusChange(@Param("id") String id ,
 							@Param("passwd") String passwd);
+	
+	// test
+	public void imgUpdate(@Param("id") String id, @Param("img") String img);
+	
+
+
+
+
 }

@@ -46,6 +46,14 @@ public class MemberServiceImpl implements MemberService{
 	public int statusChange(MemberDTO dto) {
 		return mapper.statusAdminChange(dto);
 	}
+	
+	
+	// test
+	@Override
+	public void imgUpdate(String id, String img) {
+		mapper.imgUpdate(id, img);
+		
+	}
 
 }
 

@@ -72,5 +72,55 @@ public class BoardServiceImpl implements BoardService {
 		}
 		mapper.writeInsert(dto);
 	}
+
+	
+
+	@Override
+	public BoardDTO readContent(int num) {
+		mapper.updateCountUp(num);
+		return mapper.readNum(num);
+	}
+
+	@Override
+	public BoardDTO update(int num) {
+		return mapper.readNum(num);
+	}
+
+	@Override
+	public String readPasswd(int num) {
+		return mapper.readPasswd(num);
+	}
+
+	@Override
+	public int updateNum(BoardDTO dto) {
+		String dbpw = readPasswd(dto.getNum());
+		int result = 0;
+		if(dbpw.equals(dto.getPasswd())) {
+			result = mapper.updateNum(dto);
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteNum(int num, String passwd) {
+		String dbpw = readPasswd(num);
+		int result = 0;
+		if(dbpw.equals(passwd)) {
+			result = mapper.deleteNum(num);
+		}
+		return result;
+	}
+
+	
 }
+
+
+
+
+
+
+
+
+
+
 

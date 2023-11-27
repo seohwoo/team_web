@@ -53,11 +53,56 @@ public class BoardController {
 		return "redirect:/free/list";
 	}
 	
+	@RequestMapping("content")
+	public String content(Model model, int num, int pageNum) {
+		BoardDTO article = service.readContent(num);
+		
+		model.addAttribute("article",article);
+		model.addAttribute("pageNum",pageNum);
+		
+		return "board/content";
+	}
 	
+	@RequestMapping("updateForm")
+	public String updateForm(Model model, int num, int pageNum) {
+		BoardDTO article = service.update(num);
+		
+		model.addAttribute("article",article);
+		model.addAttribute("pageNum",pageNum);
+		
+		return "board/updateForm";
+	}
 	
+	// Model model 쓰는 이유 : 컨트롤러에서 작업한 내용을 뷰로 보낼 때 사용
+	// 없는거는 따로 선언해주면 됨 int pageNum처럼 
+	@RequestMapping("updatePro")
+	public String updatePro(Model model, BoardDTO dto, int pageNum) {
+		int check = service.updateNum(dto);
+		
+		model.addAttribute("check", check);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "board/updatePro";
+	}
 	
+	@RequestMapping("deleteForm")
+	public String deleteForm(Model model, int num, int pageNum) {
+		
+		
+		model.addAttribute("num", num);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "board/deleteForm";
+	}
 	
-	
-	
+	@RequestMapping("deletePro")
+	public String deletePro(Model model, int num, String passwd, int pageNum) {
+		int check = service.deleteNum(num, passwd);
+		
+		model.addAttribute("check", check);
+		model.addAttribute("pageNum", pageNum);
+		
+		return "board/deletePro";
+	}
 	
 }
