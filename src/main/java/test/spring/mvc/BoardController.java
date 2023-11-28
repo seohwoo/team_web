@@ -1,6 +1,7 @@
 package test.spring.mvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 import test.spring.mvc.service.BoardService;
 
 @Controller
@@ -46,7 +49,7 @@ public class BoardController {
 	
 	@RequestMapping("writePro")
 	public String writePro(ArrayList<MultipartFile> files, BoardDTO dto, HttpServletRequest request) {
-		int isfile = 0;
+		int isfile = 0 , result=0;
 		for (MultipartFile file : files) {
 			if(!file.getOriginalFilename().equals("")) {
 				isfile++;
@@ -56,12 +59,23 @@ public class BoardController {
 		dto.setIp(request.getRemoteAddr());	//IP ют╥б
 		boardServiceImpl.create(dto);
 		
+		if(isfile >0) {
+			String filePath = request.getServletContext().getRealPath("/resources/file/board/");
+			result = boardServiceImpl.fileUpload(files , filePath);
+		}
+		
 		return "redirect:/free/list";
 	}
 	
 	@RequestMapping("content")
 	public String content(Model model, int num, int pageNum) {
 		BoardDTO dto = boardServiceImpl.readContent(num);
+		
+		// TEST
+		List<String> list = boardServiceImpl.fileUpdate(num);
+		model.addAttribute("article2",list);
+		//
+		
 		model.addAttribute("article", dto);
 		model.addAttribute("pageNum", pageNum);
 		return "/board/content";
@@ -97,5 +111,21 @@ public class BoardController {
 		model.addAttribute("pageNum", pageNum);
 		return "/board/deletePro";
 	}
+	
+	
+	@RequestMapping("aaaa")
+	public String aaaa(Model model) {
+		int num=1;
+		String a = boardServiceImpl.testNum(num);
+		model.addAttribute("aaa", a);
+		
+		return "board/test";
+	}
+	
+	
+	
+	
+	
+	
 	
 }

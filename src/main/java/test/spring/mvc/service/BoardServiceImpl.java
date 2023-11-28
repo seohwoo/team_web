@@ -1,8 +1,11 @@
 package test.spring.mvc.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,9 +105,45 @@ public class BoardServiceImpl implements BoardService{
 		return check;
 	}
 
+
 	@Override
-	public int fileUpload(ArrayList<MultipartFile> files) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int fileUpload(ArrayList<MultipartFile> files, String path) {
+		int result = 0;
+		int freeboardNum = mapper.maxNum();
+		for(int i = 0; i < files.size(); i++) {
+			MultipartFile f = files.get(i);
+			String fileName = f.getOriginalFilename();
+			if(!fileName.equals("")) {
+				String ext = fileName.substring(fileName.lastIndexOf("."));
+				fileName = "file_"+freeboardNum+"_"+i+ext;
+				File copy = new File(path+fileName);
+				result += mapper.fileInsert(freeboardNum, fileName);
+				try {
+					f.transferTo(copy);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
 	}
+	
+	// TEST
+	@Override
+	public List<String> fileUpdate(int freeboardnum) {
+		return mapper.fileUpdate(freeboardnum);
+	}
+
+	@Override
+	public String testNum(int num) {
+		
+		return mapper.test(num);
+	}
+
+	@Override
+	public void fileDelete(int num) {
+		mapper.deleteNum(num);
+	}
+	
+	
 }

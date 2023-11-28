@@ -70,4 +70,33 @@
 		delete from freeboard where num=#{num}
 	</delete>
 	
+	<insert id="fileInsert">
+		insert into freeboard_file values(
+			freeboard_file_seq.nextval,
+			#{freeboardnum}, 
+			#{fileName}
+		)
+	</insert>
+	
+	
+	<!-- X -->
+	<select id="fileUpdate" resultType="String" parameterType="int">
+		select filename from freeboard_file where freeboardnum=#{freeboardnum}
+	</select>
+	
+	
+	<select id="test" resultType="String" parameterType="int">
+		select writer from freeboard where num=#{num}
+	</select>
+	
+	
+	<delete id="fileDelete" parameterType="int">
+		delete from freeboard_file where freeboardnum=#{freeboardnum}
+	</delete>
+	
+	
+	
+	
+	
+	
 </mapper>    

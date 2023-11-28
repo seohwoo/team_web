@@ -39,6 +39,28 @@
 				    <td align="center" width="125" bgcolor="${value_c}">글내용</td>
 				    <td align="left" width="375" colspan="3"><pre>${article.content}</pre></td>
 				  </tr>
+				  
+				  
+				  
+				  
+				  
+				  
+				  <tr>
+				    	<td align="center" width="125" bgcolor="${value_c}">사진</td>
+				    	<td align="left" width="375" colspan="3">
+						    <c:forEach var="filename" items="${article2}">
+						    	<img src="/resources/file/board/${filename}" width="100" height="100">
+						  	</c:forEach>
+				  			</td>
+				  </tr>
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
 				  <tr height="30">      
 				    <td colspan="4" bgcolor="${value_c}" align="right" >
 						<input type="button" value="글수정" 
