@@ -1,5 +1,6 @@
 package test.spring.mvc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
 import test.spring.mvc.service.BoardService;
@@ -47,7 +49,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("writePro")
-	public String writePro(BoardDTO dto, HttpServletRequest request) {
+	public String writePro(ArrayList<MultipartFile> files, BoardDTO dto, HttpServletRequest request) {
+		int isfile = 0;
+		for(MultipartFile f : files) {
+			if(!f.getOriginalFilename().equals("")) {
+				isfile++;
+			}
+		}
+		dto.setIsfile(isfile);
 		dto.setIp(request.getRemoteAddr());
 		service.create(dto);
 		return "redirect:/free/list";

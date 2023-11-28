@@ -3,7 +3,7 @@
 <%@ include file="/resources/etc/color.jsp"%>
 
 
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/style.css" rel="stylesheet" type="text/css"> 
 
 <table width="270" border="0" cellspacing="0" cellpadding="5" align="center">
   <tr bgcolor="${title_c}"> 
@@ -24,5 +24,3 @@
     </td>
   </tr>
 </table>
-</body>
-</html>

@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class BoardDTO {
+	private int isfile;
 	private int num;
 	private String writer;
 	private String subject;

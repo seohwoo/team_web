@@ -35,9 +35,9 @@
 	</update>
 	
 	<insert id="writeInsert" parameterType="test.spring.mvc.bean.BoardDTO">
-		insert into freeboard(num, writer, email, subject, passwd, reg_date, ref, re_step, re_level, content, ip) 
+		insert into freeboard(num, writer, email, subject, passwd, reg_date, ref, re_step, re_level, content, ip, isfile) 
 		values(freeboard_seq.NEXTVAL, #{writer}, #{email}, #{subject}, #{passwd}, 
-		sysdate, #{ref}, #{re_step}, #{re_level}, #{content}, #{ip} )
+		sysdate, #{ref}, #{re_step}, #{re_level}, #{content}, #{ip}, #{isfile} )
 	</insert>
 	
 	<update id="updateCountUp" >

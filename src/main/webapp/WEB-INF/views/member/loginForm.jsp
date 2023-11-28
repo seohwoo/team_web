@@ -1,33 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/resources/etc/color.jsp"%>
 <html>
 <head><title>로그인</title>
-<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
-
-   <script language="javascript">
-     <!--
-       function begin(){
-         document.myform.id.focus();
-       }
-       function checkIt(){
-         if(!document.myform.id.value){
-           alert("아이디를 입력하지 않으셨습니다.");
-           document.myform.id.focus();
-           return false;
-         }
-         if(!document.myform.passwd.value){
-           alert("비밀번호를 입력하지 않으셨습니다.");
-           document.myform.passwd.focus();
-           return false;
-         }
-         
-       }
-     -->
-   </script>
+<link href="/resources/etc/style.css" rel="stylesheet" type="text/css">  
 </head>
+
 <BODY onload="begin()" bgcolor="${bodyback_c}">
-<form name="myform" action="/mvc/user/loginPro.me" method="post" onSubmit="return checkIt()">
+<form name="myform" action="/user/loginPro.me" method="post" onSubmit="return checkIt()">
 <TABLE cellSpacing=1 cellPadding=1 width="260" border=1 align="center" >
   
   <TR height="30">
@@ -45,7 +25,7 @@
     <TD colspan="2" align="middle" bgcolor="${title_c}" >
       <INPUT type=submit value="로그인"> 
       <INPUT type=reset value="다시입력">
-      <input type="button" value="회원가입" onclick="javascript:window.location='/mvc/user/inputForm.me'"></TD></TR>
+      <input type="button" value="회원가입" onclick="javascript:window.location='/user/inputForm.me'"></TD></TR>
 </TABLE>
 </form>
 
