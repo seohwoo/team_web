@@ -2,6 +2,8 @@ package test.spring.mvc.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import test.spring.mvc.bean.GradeDTO;
 import test.spring.mvc.bean.MemberDTO;
 
@@ -17,5 +19,5 @@ public interface MemberService {
 	public String userStatus(int status);
 	public List<GradeDTO> allStatus();
 	public void changeStatus(MemberDTO dto);
-	public void changeImg(String id, String img);
+	public boolean changeImg(String id, String path, MultipartFile img);
 }

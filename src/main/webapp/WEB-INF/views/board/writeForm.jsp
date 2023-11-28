@@ -7,12 +7,12 @@
 	<head>
 		<title>게시판</title>
 		<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
-		<script language="JavaScript" src="resources/js/script.js"></script>
+		<script src="/resources/js/script.js" language="JavaScript" ></script>
 	</head>
 	<body bgcolor="${bodyback_c}">  
 		<center><b>글쓰기</b></center>
 		<br>
-		<form method="post" name="writeform" action="/free/writePro" onsubmit="return writeSave()">
+		<form method="post" name="writeform" action="/free/writePro" enctype="multipart/form-data" onsubmit="return writeSave()">
 			<input type="hidden" name="num" value="${num }">
 			<input type="hidden" name="ref" value="${ref }">
 			<input type="hidden" name="re_step" value="${re_step }">
@@ -46,6 +46,17 @@
 				  	<td  width="330">
 				     	<input type="text" size="40" maxlength="30" name="email" >
 				     </td>
+				</tr>
+				<tr>
+				  	<td  width="330" colspan="2" align="center">
+				     	<input type="button" value="파일 추가" onclick="fileAdd()" />
+				     </td>
+				</tr>
+				<tr>
+				  	<td  width="70"  bgcolor="${value_c }" align="center">파일</td>
+				  	<td  width="330" id="files">
+				     	<input type="file" size="40" maxlength="30" name="files" />
+				    </td>
 				</tr>
 				<tr>
 				  	<td  width="70"  bgcolor="${value_c }" align="center" >내 용</td>

@@ -37,3 +37,9 @@ function deleteSave(){
 	}
 }   
 
+function fileAdd() {
+	document.getElementById("files").innerHTML+='<br /><input type="file" size="40" maxlength="30" name="files" />';
+	
+}
+
+

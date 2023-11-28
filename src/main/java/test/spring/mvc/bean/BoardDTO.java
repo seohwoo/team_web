@@ -19,4 +19,5 @@ public class BoardDTO {
 	private int re_step;
 	private int re_level;
 	private int pageNum;
+	private int isfile;
 }

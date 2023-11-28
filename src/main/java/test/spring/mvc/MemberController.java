@@ -82,20 +82,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping("uploadPro.me")
-	public String uploadPro(HttpSession session, HttpServletRequest request, MultipartFile upload) {
+	public String uploadPro(Model model, HttpSession session, HttpServletRequest request, MultipartFile img) {
 		String id = (String) session.getAttribute("memId");
-		String img = upload.getOriginalFilename();
-		String filePath = request.getServletContext().getRealPath("/resources/file/user/");
-		if(upload.getContentType().split("/")[0].equals("image")) {
-			File copy = new File(filePath + img);	
-			try {
-				upload.transferTo(copy);
-				memberServiceImpl.changeImg(id, img); 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return "redirect:/user/modify.me";
+		String path = request.getServletContext().getRealPath("/resources/file/user/");
+		boolean result = memberServiceImpl.changeImg(id, path, img);
+		model.addAttribute("result", result);
+		return "member/uploadPro";
 	}
 	
 	@RequestMapping("deleteForm.me")

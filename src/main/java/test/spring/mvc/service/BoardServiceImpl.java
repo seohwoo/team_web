@@ -1,5 +1,6 @@
 package test.spring.mvc.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
 import test.spring.mvc.bean.MemberDTO;
@@ -98,5 +100,11 @@ public class BoardServiceImpl implements BoardService{
 			check = mapper.deleteNum(num);
 		}
 		return check;
+	}
+
+	@Override
+	public int fileUpload(ArrayList<MultipartFile> files) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

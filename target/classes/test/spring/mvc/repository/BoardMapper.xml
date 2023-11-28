@@ -26,7 +26,7 @@
 	</update>
 	<insert id="writeInsert" parameterType="test.spring.mvc.bean.BoardDTO">
 		insert into freeboard
-		(num, writer, email, subject, passwd, reg_date, content, ip, ref, re_step, re_level) values(
+		(num, writer, email, subject, passwd, reg_date, content, ip, ref, re_step, re_level, isfile) values(
 			freeboard_seq.NEXTVAL,
 			#{writer},
 			#{email},
@@ -37,7 +37,8 @@
 			#{ip},
 			#{ref},
 			#{re_step},
-			#{re_level}
+			#{re_level},
+			#{isfile}
 		)	
 	</insert>
 	

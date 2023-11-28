@@ -8,7 +8,7 @@ pageEncoding="UTF-8"%>
     </head>
     <body>
     	<form action="/user/uploadPro.me" method="post" enctype="multipart/form-data">
-    		업로드 : <input type="file" name="upload"/> <br />
+    		업로드 : <input type="file" name="img"/> <br />
     		<input type="submit" value="전송" />
     	</form>
     </body>
