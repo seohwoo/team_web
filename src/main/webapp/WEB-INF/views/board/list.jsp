@@ -52,6 +52,9 @@
 						<c:if test="${article.readcount>=20 }">
 							<img src="/resources/images/hot.gif" border="0"  height="16">
 						</c:if>
+						<c:if test="${article.isfile>0 }">
+							<img src="/resources/images/metamong.jpg" border="0"  height="16" style="margin-top: 5px;">
+						</c:if>
 				    </td>
 				    <td align="center"  width="100"> 
 				       <a href="mailto:${article.email}">${article.writer}</a></td>

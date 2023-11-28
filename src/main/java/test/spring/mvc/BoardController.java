@@ -1,6 +1,8 @@
 package test.spring.mvc;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.FreeBoardFileDTO;
 import test.spring.mvc.service.BoardService;
 
 @Controller
@@ -47,6 +50,7 @@ public class BoardController {
 	@RequestMapping("writePro")
 	public String writePro(ArrayList<MultipartFile> files, BoardDTO dto, HttpServletRequest request) {
 		int isfile = 0;
+		int result = 0;
 		for (MultipartFile file : files) {
 			if(!file.getOriginalFilename().equals("")) {
 				isfile++;
@@ -55,15 +59,20 @@ public class BoardController {
 		dto.setIsfile(isfile);
 		dto.setIp(request.getRemoteAddr());	//IP ют╥б
 		boardServiceImpl.create(dto);
-		
+		if(isfile>0) {
+			String path = request.getServletContext().getRealPath("/resources/file/board/");
+			result = boardServiceImpl.fileUpload(files, path);
+		}
 		return "redirect:/free/list";
 	}
 	
 	@RequestMapping("content")
 	public String content(Model model, int num, int pageNum) {
 		BoardDTO dto = boardServiceImpl.readContent(num);
+		List<FreeBoardFileDTO> imgList = boardServiceImpl.findImg(num);
 		model.addAttribute("article", dto);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("imgList", imgList);
 		return "/board/content";
 	}
 	
@@ -91,8 +100,17 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deletePro")
-	public String deletePro(Model model, int num, String passwd, int pageNum) {
-		int check = boardServiceImpl.deleteArticle(num, passwd);
+	public String deletePro(HttpServletRequest request, Model model, int num, String passwd, int pageNum) {
+		int check = 0;
+		List<FreeBoardFileDTO> list = boardServiceImpl.findImg(num);
+		String path = request.getServletContext().getRealPath("/resources/file/board/");
+		for (FreeBoardFileDTO dto : list) {
+			File file = new File(path+dto.getFilename());
+			if(file.isFile()) {
+				file.delete();
+			}
+		}
+		check = boardServiceImpl.deleteArticle(num, passwd);
 		model.addAttribute("check", check);
 		model.addAttribute("pageNum", pageNum);
 		return "/board/deletePro";

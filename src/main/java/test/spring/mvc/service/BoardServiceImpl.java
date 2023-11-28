@@ -1,5 +1,6 @@
 package test.spring.mvc.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.FreeBoardFileDTO;
 import test.spring.mvc.bean.MemberDTO;
 import test.spring.mvc.repository.BoardMapper;
 
@@ -98,13 +100,40 @@ public class BoardServiceImpl implements BoardService{
 		int check = 0;
 		if(mapper.readPasswd(num).equals(passwd)) {
 			check = mapper.deleteNum(num);
+			mapper.deleteImg(num);
 		}
 		return check;
 	}
 
 	@Override
-	public int fileUpload(ArrayList<MultipartFile> files) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int fileUpload(ArrayList<MultipartFile> files, String path) {
+		int result = 0;
+		int boardnum = mapper.maxNum();
+		for (int i = 1; i <= files.size(); i++) {
+			MultipartFile file = files.get(i-1);
+			String filename = file.getOriginalFilename();
+			if(!filename.equals("")) {
+				String ext = filename.substring(filename.lastIndexOf("."));
+				filename = "file_"+boardnum+"_"+i+ext;
+				File copy = new File(path+filename);
+				result = mapper.fileInsert(boardnum, filename);
+				try {
+					file.transferTo(copy);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public List<FreeBoardFileDTO> findImg(int boardnum) {
+		return mapper.findImg(boardnum);
+	}
+
+	@Override
+	public List<BoardDTO> findAllRef(int ref) {
+		return mapper.findAllRef(ref);
 	}
 }

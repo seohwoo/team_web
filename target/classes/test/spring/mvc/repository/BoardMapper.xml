@@ -70,4 +70,24 @@
 		delete from freeboard where num=#{num}
 	</delete>
 	
+	<insert id="fileInsert" >
+		insert into freeboard_file values(
+			freeboard_file_seq.NEXTVAL,
+			#{boardnum},
+			#{filename}
+		)
+	</insert>
+	
+	<select id="findImg" parameterType="int" resultType="test.spring.mvc.bean.FreeBoardFileDTO">
+		select * from freeboard_file where boardnum=#{boardnum}
+	</select>
+	
+	<delete id="deleteImg" parameterType="int">
+		delete from freeboard_file where boardnum=#{boardnum}
+	</delete>
+	
+	<select id="findAllRef" parameterType="int" resultType="test.spring.mvc.bean.BoardDTO">
+		select * from freeboard where ref=#{ref}
+	</select>
+	
 </mapper>    
