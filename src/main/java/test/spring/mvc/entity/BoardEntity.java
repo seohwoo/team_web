@@ -47,12 +47,11 @@ public class BoardEntity {
 	@Column(name="re_level")
 	private int reLevel;
 	
-	private int pageNum;
 	private int isfile;
 	
 	@Builder
 	public BoardEntity(int num, String writer, String subject, String email, String content, String passwd, Date reg_date,
-		int readcount, String ip, int ref, int re_step, int re_level, int pageNum, int isfile) {
+		int readcount, String ip, int ref, int re_step, int re_level, int isfile) {
 	super();
 	this.num = num;
 	this.writer = writer;
@@ -66,7 +65,6 @@ public class BoardEntity {
 	this.ref = ref;
 	this.reStep = re_step;
 	this.reLevel = re_level;
-	this.pageNum = pageNum;
 	this.isfile = isfile;
 	}
 	
@@ -84,7 +82,6 @@ public class BoardEntity {
 					   .ref(this.ref)
 					   .re_step(this.reStep)
 					   .re_level(this.reLevel)
-					   .pageNum(this.pageNum)
 					   .isfile(this.isfile)
 					   .build();
 	}

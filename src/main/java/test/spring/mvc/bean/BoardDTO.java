@@ -22,12 +22,11 @@ public class BoardDTO {
 	private int ref;
 	private int re_step;
 	private int re_level;
-	private int pageNum;
 	private int isfile;
 	
 	@Builder
 	public BoardDTO(int num, String writer, String subject, String email, String content, String passwd, Date reg_date,
-			int readcount, String ip, int ref, int re_step, int re_level, int pageNum, int isfile) {
+			int readcount, String ip, int ref, int re_step, int re_level, int isfile) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -41,7 +40,6 @@ public class BoardDTO {
 		this.ref = ref;
 		this.re_step = re_step;
 		this.re_level = re_level;
-		this.pageNum = pageNum;
 		this.isfile = isfile;
 	}
 
@@ -59,7 +57,6 @@ public class BoardDTO {
 					   .ref(this.ref)
 					   .re_step(this.re_step)
 					   .re_level(this.re_level)
-					   .pageNum(this.pageNum)
 					   .isfile(this.isfile)
 					   .build();
 	}
