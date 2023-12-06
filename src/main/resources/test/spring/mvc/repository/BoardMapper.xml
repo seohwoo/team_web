@@ -70,6 +70,11 @@
 		delete from freeboard where num=#{num}
 	</delete>
 	
+	<delete id="deleteFile" >
+		delete from freeboard_file where freeboardnum=#{freeboardnum}
+	</delete>
+	
+	
 	<insert id="fileInsert">
 		insert into freeboard_file values(
 			freeboard_file_seq.nextval,
@@ -80,19 +85,11 @@
 	
 	
 	<!-- X -->
-	<select id="fileUpdate" resultType="String" parameterType="int">
-		select filename from freeboard_file where freeboardnum=#{freeboardnum}
+	<select id="fileList" resultType="boardFileDTO">
+		select * from freeboard_file where freeboardnum=#{freeboardnum}
 	</select>
 	
-	
-	<select id="test" resultType="String" parameterType="int">
-		select writer from freeboard where num=#{num}
-	</select>
-	
-	
-	<delete id="fileDelete" parameterType="int">
-		delete from freeboard_file where freeboardnum=#{freeboardnum}
-	</delete>
+
 	
 	
 	

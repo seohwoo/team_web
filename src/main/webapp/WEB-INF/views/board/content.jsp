@@ -35,30 +35,25 @@
 				    <td align="center" width="375" align="center" colspan="3">
 					     ${article.subject}</td>
 				  </tr>
+				 
+				 
+				 <c:if test="${fileList != null }">
+				 	<tr>
+					    <td align="center" width="125" bgcolor="${value_c}">첨부파일</td>
+					    <td align="left" width="375" colspan="3">
+					    	<c:forEach var="fileDTO" items="${fileList }">
+					    		<a href="/free/download?filename=${fileDTO.filename }">${fileDTO.filename }</a> <br />
+					    	</c:forEach>
+						</td>					    
+				    </tr>
+				 </c:if>
+
+
+
 				  <tr>
 				    <td align="center" width="125" bgcolor="${value_c}">글내용</td>
 				    <td align="left" width="375" colspan="3"><pre>${article.content}</pre></td>
 				  </tr>
-				  
-				  
-				  
-				  
-				  
-				  
-				  <tr>
-				    	<td align="center" width="125" bgcolor="${value_c}">사진</td>
-				    	<td align="left" width="375" colspan="3">
-						    <c:forEach var="filename" items="${article2}">
-						    	<img src="/resources/file/board/${filename}" width="100" height="100">
-						  	</c:forEach>
-				  			</td>
-				  </tr>
-				  
-				  
-				  
-				  
-				  
-				  
 				  
 				  
 				  <tr height="30">      

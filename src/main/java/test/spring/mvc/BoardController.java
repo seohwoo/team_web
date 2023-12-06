@@ -1,5 +1,6 @@
 package test.spring.mvc;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import test.spring.mvc.bean.BoardDTO;
 import test.spring.mvc.bean.BoardFileDTO;
@@ -71,11 +73,12 @@ public class BoardController {
 	public String content(Model model, int num, int pageNum) {
 		BoardDTO dto = boardServiceImpl.readContent(num);
 		
-		// TEST
-		List<String> list = boardServiceImpl.fileUpdate(num);
-		model.addAttribute("article2",list);
-		//
+		List<BoardFileDTO> fileList = null;
+		if(dto.getIsfile() > 0) {
+			fileList = boardServiceImpl.fileList(num);
+		}
 		
+		model.addAttribute("fileList", fileList);
 		model.addAttribute("article", dto);
 		model.addAttribute("pageNum", pageNum);
 		return "/board/content";
@@ -105,23 +108,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping("deletePro")
-	public String deletePro(Model model, int num, String passwd, int pageNum) {
-		int check = boardServiceImpl.deleteArticle(num, passwd);
+	public String deletePro(HttpServletRequest request, Model model, int num, String passwd, int pageNum) {
+		String filePath = request.getServletContext().getRealPath("/resources/file/board/");
+		int check = boardServiceImpl.deleteArticle(num, passwd, filePath);
 		model.addAttribute("check", check);
 		model.addAttribute("pageNum", pageNum);
 		return "/board/deletePro";
 	}
 	
-	
-	@RequestMapping("aaaa")
-	public String aaaa(Model model) {
-		int num=1;
-		String a = boardServiceImpl.testNum(num);
-		model.addAttribute("aaa", a);
+	@RequestMapping("download")
+	public ModelAndView download(HttpServletRequest request, String filename) {
+		String filePath = request.getServletContext().getRealPath("/resources/file/board/");
+		File file = new File(filePath+filename);
+		ModelAndView mv = new ModelAndView("downView","downFile",file);
 		
-		return "board/test";
+		return mv;
 	}
-	
 	
 	
 	

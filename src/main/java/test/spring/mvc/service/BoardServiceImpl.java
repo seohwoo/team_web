@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 import test.spring.mvc.bean.MemberDTO;
 import test.spring.mvc.repository.BoardMapper;
 
@@ -97,9 +98,19 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int deleteArticle(int num, String passwd) {
+	public int deleteArticle(int num, String passwd, String path) {
 		int check = 0;
 		if(mapper.readPasswd(num).equals(passwd)) {
+			List<BoardFileDTO> fileList = mapper.fileList(num);
+			if(fileList != null) {
+				for(BoardFileDTO fileDTO : fileList) {
+					File f = new File(path+fileDTO.getFilename());
+					if(f.isFile()) {
+						f.delete();
+					}
+				}
+			}
+			mapper.deleteFile(num);
 			check = mapper.deleteNum(num);
 		}
 		return check;
@@ -127,22 +138,10 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
-	
-	// TEST
-	@Override
-	public List<String> fileUpdate(int freeboardnum) {
-		return mapper.fileUpdate(freeboardnum);
-	}
 
 	@Override
-	public String testNum(int num) {
-		
-		return mapper.test(num);
-	}
-
-	@Override
-	public void fileDelete(int num) {
-		mapper.deleteNum(num);
+	public List<BoardFileDTO> fileList(int freeboardnum) {
+		return mapper.fileList(freeboardnum);
 	}
 	
 	

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+   xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+      http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd">
    
    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
       <!-- <property name="driverClassName" value ="oracle.jdbc.driver.OracleDriver" /> -->
@@ -19,9 +21,26 @@
       <constructor-arg ref="hikariConfig" />
    </bean>
    
+   <jpa:repositories base-package="test.spring.mvc.repository" />
+   
+   <!-- Hibernate + JPA 통합 -->
+   <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+   
+   <!-- JPA Entity 관리 -->
+   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+         <property name="dataSource" ref="dataSource"/>
+         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />   
+   </bean>
+   
+   <!-- JPA Transaction -->
+   <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+         <property name="entityManagerFactory" ref="entityManagerFactory" />
+   </bean>
+   
    <!-- sqlSessionFactory : mybatis 객체 -->
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-   		<property name="dataSource" ref="dataSource" />
+         <property name="dataSource" ref="dataSource" />
+         <property name="configLocation" value="/WEB-INF/spring/mybatis.xml" />
    </bean>
    
    <mybatis-spring:scan base-package="test.spring.mvc.repository"/>

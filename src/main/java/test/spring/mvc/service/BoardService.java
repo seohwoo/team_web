@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 
 public interface BoardService {
 	public int listCount();
@@ -16,13 +17,9 @@ public interface BoardService {
 	public BoardDTO readContent(int num);
 	public BoardDTO update(int num);
 	public int updateArticle(BoardDTO dto);
-	public int deleteArticle(int num, String passwd);
+	public int deleteArticle(int num, String passwd, String path);
 
 	// TEST
-	public List<String> fileUpdate(int freeboardnum);
+	public List<BoardFileDTO> fileList(int freeboardnum);
 
-	
-	public String testNum(int num);
-	
-	public void fileDelete(int num);
 }

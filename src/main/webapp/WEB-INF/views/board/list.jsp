@@ -48,24 +48,12 @@
 						<c:if test="${article.re_level == 0 }">
 					  		<img src="/resources/images/level.gif" width="0" height="16">
 						</c:if>
-						
-						
-						
-						
-						
-						
-						
-						
+
 						<a href="content?num=${article.num}&pageNum=${pageNum}">${article.subject}</a> 
 						
-						<!-- 밑에 추가 -->
-						<c:if test="${article.isfile> 0}">
+						<c:if test="${article.isfile > 0}">
 						<img src="/resources/file/user/icon.png" width="20" height="20"/> <br />
 						</c:if>
-						
-						
-						
-						
 						
 						<c:if test="${article.readcount>=20 }">
 							<img src="/resources/images/hot.gif" border="0"  height="16">

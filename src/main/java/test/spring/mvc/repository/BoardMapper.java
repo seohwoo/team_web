@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 
 public interface BoardMapper {
 	public int listCount();
@@ -22,10 +23,7 @@ public interface BoardMapper {
 	public int fileInsert(@Param("freeboardnum") int freeboardnum, 		
 						  @Param("fileName") String fileName);
 	// TEST
-	public List<String> fileUpdate(int freeboardnum); 
+	public List<BoardFileDTO> fileList(int freeboardnum); 
 
-	
-	public String test(int num);
-	
-	public void fileDelete(int num);
+	public int deleteFile(int freeboardnum);
 }
