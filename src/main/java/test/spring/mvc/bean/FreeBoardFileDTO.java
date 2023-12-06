@@ -7,4 +7,6 @@ public class FreeBoardFileDTO {
 	private int num;
 	private int boardnum;
 	private String filename;
+	
+	
 }

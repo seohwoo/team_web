@@ -9,48 +9,44 @@
 		<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
 		<script language="JavaScript" src="resources/js/script.js"></script>
 	</head>
-	<body bgcolor="${bodyback_c}">  	
+	<body>  	
 		<center>
 			<h3>글내용 보기</h3>
 			<form>
-				<table width="500" border="1" cellspacing="0" cellpadding="0"  bgcolor="${bodyback_c }" align="center">  
-				  <tr height="30">
-				    <td align="center" width="125" bgcolor="${value_c}">글번호</td>
-				    <td align="center" width="125" align="center">
-					     ${article.num}</td>
-				    <td align="center" width="125" bgcolor="${value_c}">조회수</td>
-				    <td align="center" width="125" align="center">
-					     ${article.readcount}</td>
+				<table>  
+				  <tr>
+				    <td>글번호</td>
+				    <td>${dto.num}</td>
+				    <td>조회수</td>
+				    <td>${dto.readcount}</td>
 				  </tr>
-				  <tr height="30">
-				    <td align="center" width="125" bgcolor="${value_c}">작성자</td>
-				    <td align="center" width="125" align="center">
-					     ${article.writer}</td>
-				    <td align="center" width="125" bgcolor="${value_c}" >작성일</td>
-				    <td align="center" width="125" align="center">
-					     <fmt:formatDate value="${article.reg_date}" dateStyle="short" type="date"/> </td>
+				  <tr>
+				    <td>작성자</td>
+				    <td>${dto.writer}</td>
+				    <td>작성일</td>
+				    <td>
+					     <fmt:formatDate value="${dto.reg_date}" dateStyle="short" type="date"/> </td>
 				  </tr>
-				  <tr height="30">
-				    <td align="center" width="125" bgcolor="${value_c}">글제목</td>
-				    <td align="center" width="375" align="center" colspan="3">
-					     ${article.subject}</td>
+				  <tr>
+				    <td>글제목</td>
+				    <td>${dto.title}</td>
 				  </tr>
-				  <c:if test="${article.isfile>0 }">
+				  <c:if test="${dto.files>0 }">
 				  	<tr>
-				    	<td align="center" width="125" bgcolor="${value_c}">첨부파일</td>
-				    	<td align="left" width="375" colspan="3">
-				    		<c:forEach var="dto" items="${imgList }">
-				    			<img src="/resources/file/board/${dto.filename}" width="100px" height="100px"/>
+				    	<td>첨부파일</td>
+				    	<td>
+				    		<c:forEach var="file" items="${fileList }">
+				    			<img src="/resources/file/board/${file.filename}" width="100px" height="100px"/>
 				    		</c:forEach>
 				    	</td>
 				  	</tr>
 				  </c:if>
 				  <tr>
-				    <td align="center" width="125" bgcolor="${value_c}">글내용</td>
-				    <td align="left" width="375" colspan="3"><pre>${article.content}</pre></td>
+				    <td>글내용</td>
+				    <td><pre>${dto.content}</pre></td>
 				  </tr>
 				  <tr height="30">      
-				    <td colspan="4" bgcolor="${value_c}" align="right" >
+				    <td>
 						<input type="button" value="글수정" 
 						onclick="document.location.href='/free/updateForm?num=${article.num}&pageNum=${pageNum}'">
 						&nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,7 +57,7 @@
 						onclick="document.location.href='/free/writeForm?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
 						&nbsp;&nbsp;&nbsp;&nbsp;
 				       <input type="button" value="글목록" 
-				       onclick="document.location.href='/free/list?pageNum=${pageNum}'">
+				       onclick="document.location.href='/img/list?pageNum=${pageNum}'">
 				    </td>
 				  </tr>
 				</table>

@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
 import test.spring.mvc.bean.FreeBoardFileDTO;
-import test.spring.mvc.bean.MemberDTO;
 import test.spring.mvc.repository.BoardMapper;
 
 @Service
