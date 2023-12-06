@@ -49,7 +49,7 @@
 					   <input type="submit" value="글수정" >  
 					   <input type="reset" value="다시작성">
 					   <input type="button" value="목록보기" 
-					     onclick="document.location.href='list.jsp?pageNum=${pageNum}'">
+					     onclick="document.location.href='/free/list?pageNum=${pageNum}'">
 					 </td>
 					</tr>
 				</table>

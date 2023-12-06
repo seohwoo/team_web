@@ -9,56 +9,67 @@
 		<link href="/resources/css/style.css" rel="stylesheet" type="text/css">
 		<script language="JavaScript" src="resources/js/script.js"></script>
 	</head>
-	<body>  	
+	<body bgcolor="${bodyback_c }">  	
 		<center>
 			<h3>글내용 보기</h3>
 			<form>
-				<table>  
-				  <tr>
-				    <td>글번호</td>
+				<table width="700" border="1" cellpadding="0" cellspacing="0">  
+				  <tr >
+				    <td bgcolor="${value_c}">글번호</td>
 				    <td>${dto.num}</td>
-				    <td>조회수</td>
+				  </tr>
+				  <tr>
+				    <td bgcolor="${value_c}">글제목</td>
+				    <td>${dto.subject}</td>
+				  </tr>
+				  <tr>
+				    <td bgcolor="${value_c}">작성자</td>
+				    <td>${dto.writer}</td>
+				  </tr>
+				  <tr>
+				    <td bgcolor="${value_c}">글내용</td>
+				    <td><pre>${dto.content}</pre></td>
+				  </tr>
+				    <c:if test="${dto.isfile>0 }">
+				  		<tr>
+					    	<td bgcolor="${value_c}">첨부파일</td>
+							   <td>
+					    		<c:forEach var="file" items="${imgList }">
+							    	<a href="/free/download?filename=${file.filename }">${file.filename}</a> <br />
+					    		</c:forEach>
+							  </td>
+				  		</tr>
+				    </c:if>
+				  <tr>
+				    <td bgcolor="${value_c}">조회수</td>
 				    <td>${dto.readcount}</td>
 				  </tr>
 				  <tr>
-				    <td>작성자</td>
-				    <td>${dto.writer}</td>
-				    <td>작성일</td>
+				    <td bgcolor="${value_c}">작성일</td>
 				    <td>
-					     <fmt:formatDate value="${dto.reg_date}" dateStyle="short" type="date"/> </td>
+					     <fmt:formatDate value="${dto.reg_date}" dateStyle="short" type="date"/> 
+					</td>
 				  </tr>
-				  <tr>
-				    <td>글제목</td>
-				    <td>${dto.title}</td>
-				  </tr>
-				  <c:if test="${dto.files>0 }">
-				  	<tr>
-				    	<td>첨부파일</td>
-				    	<td>
-				    		<c:forEach var="file" items="${fileList }">
-				    			<img src="/resources/file/board/${file.filename}" width="100px" height="100px"/>
-				    		</c:forEach>
-				    	</td>
-				  	</tr>
-				  </c:if>
-				  <tr>
-				    <td>글내용</td>
-				    <td><pre>${dto.content}</pre></td>
-				  </tr>
-				  <tr height="30">      
+				  <tr>      
 				    <td>
 						<input type="button" value="글수정" 
-						onclick="document.location.href='/free/updateForm?num=${article.num}&pageNum=${pageNum}'">
+						onclick="document.location.href='/free/updateForm?num=${dto.num}&pageNum=${pageNum}'">
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="글삭제" 
-						onclick="document.location.href='/free/deleteForm?num=${article.num}&pageNum=${pageNum}'">
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="button" value="답글쓰기" 
-						onclick="document.location.href='/free/writeForm?num=${article.num}&ref=${article.ref}&re_step=${article.re_step}&re_level=${article.re_level}'">
-						&nbsp;&nbsp;&nbsp;&nbsp;
-				       <input type="button" value="글목록" 
-				       onclick="document.location.href='/img/list?pageNum=${pageNum}'">
 				    </td>
+				    <td>
+						<input type="button" value="글삭제" 
+						onclick="document.location.href='/free/deleteForm?num=${dto.num}&pageNum=${pageNum}'">
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>	
+						<input type="button" value="답글쓰기" 
+						onclick="document.location.href='/free/writeForm?num=${dto.num}&ref=${dto.ref}&re_step=${dto.re_step}&re_level=${article.re_level}'">
+						&nbsp;&nbsp;&nbsp;&nbsp;
+					</td>
+					<td>	
+				       <input type="button" value="글목록" 
+				       onclick="document.location.href='/free/list?pageNum=${pageNum}'">
+				    </td>   
 				  </tr>
 				</table>
 			</form>

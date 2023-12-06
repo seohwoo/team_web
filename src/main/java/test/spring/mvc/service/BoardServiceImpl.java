@@ -1,44 +1,57 @@
 package test.spring.mvc.service;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 import test.spring.mvc.bean.FreeBoardFileDTO;
+import test.spring.mvc.entity.BoardEntity;
+import test.spring.mvc.entity.BoardFileEntity;
+import test.spring.mvc.repository.BoardFileHJPARepository;
+import test.spring.mvc.repository.BoardJPARepository;
 import test.spring.mvc.repository.BoardMapper;
 
 @Service
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
-	private BoardMapper mapper;
+	private BoardJPARepository boardJPA;
+	
 	@Autowired
-	private HashMap<String, Integer> boardMap;
+	private BoardFileHJPARepository boardFileJPA;
 
 	@Override
 	public int listCount() {
-		return mapper.listCount();
+		return (int) boardJPA.count();
 	}
 
 	@Override
 	public void showList(int pageNum, Model model) {
 		int pageSize = 10;
-		int start = (pageNum -1) * pageSize +1;
-		int end = pageNum * pageSize;
-		int cnt = mapper.listCount();
+		int cnt = listCount();
 		List<BoardDTO> list = Collections.EMPTY_LIST;	// Collections.EMPTY_LIST : 빈 리스트
 		if(cnt > 0) {
-			boardMap.put("end", end);
-			boardMap.put("start", start);
-			list = mapper.showList(boardMap);
+			Sort sort = Sort.by(Sort.Order.desc("ref"), Sort.Order.asc("reStep"));
+			Page<BoardEntity> page = boardJPA.findAll(PageRequest.of(pageNum-1, pageSize, sort));
+			List<BoardEntity> entityList = page.getContent();
+			list = new ArrayList<BoardDTO>();
+			for (BoardEntity boardEntity : entityList) {
+				BoardDTO dto = boardEntity.toBoardDTO();
+				list.add(dto);
+			}
 		}
 		//	model에 담았다면, Model을 리턴받을 필요가 없다.
 		model.addAttribute("userList", list);
@@ -63,33 +76,35 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void create(BoardDTO dto) {
-		int number = mapper.maxNum()+1;
+		int number = boardJPA.findMaxNum()+1;
 		if(dto.getNum() != 0) {
-			mapper.writeUpdate(dto);
+			boardJPA.writeUpdate(dto.getRef(), dto.getRe_step());
 			dto.setRe_step(dto.getRe_step()+1);
 			dto.setRe_level(dto.getRe_level()+1);
 		}else {
 			dto.setRe_step(number);
 		}
-		mapper.writeInsert(dto);
+		dto.setReg_date(new Timestamp(System.currentTimeMillis()));
+		boardJPA.save(dto.toBoardEntity());
 	}
 
 	@Override
 	public BoardDTO readContent(int num) {
-		mapper.updateCountUp(num);
-		return mapper.readNum(num);
+		boardJPA.readCount(num);
+		return boardJPA.findById(num).get().toBoardDTO();
 	}
 
 	@Override
 	public BoardDTO update(int num) {
-		return mapper.readNum(num);
+		return boardJPA.findById(num).get().toBoardDTO();
 	}
 
 	@Override
 	public int updateArticle(BoardDTO dto) {
 		int check = 0;
-		if(mapper.readPasswd(dto.getNum()).equals(dto.getPasswd())) {
-			check = mapper.updateNum(dto);
+		if(boardJPA.findById(dto.getNum()).get().toBoardDTO().getPasswd().equals(dto.getPasswd())) {
+			boardJPA.updateNum(dto);
+			check++;
 		}
 		return check;
 	}
@@ -97,9 +112,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int deleteArticle(int num, String passwd) {
 		int check = 0;
-		if(mapper.readPasswd(num).equals(passwd)) {
-			check = mapper.deleteNum(num);
-			mapper.deleteImg(num);
+		if(boardJPA.findById(num).get().toBoardDTO().getPasswd().equals(passwd)) {
+			boardJPA.deleteById(num);
+			boardFileJPA.deleteByFreeboardnum(num);
+			check++;
 		}
 		return check;
 	}
@@ -107,15 +123,19 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int fileUpload(ArrayList<MultipartFile> files, String path) {
 		int result = 0;
-		int boardnum = mapper.maxNum();
+		int boardnum = boardJPA.findMaxNum();
 		for (int i = 1; i <= files.size(); i++) {
 			MultipartFile file = files.get(i-1);
 			String filename = file.getOriginalFilename();
+			BoardFileDTO dto = new BoardFileDTO();
 			if(!filename.equals("")) {
 				String ext = filename.substring(filename.lastIndexOf("."));
 				filename = "file_"+boardnum+"_"+i+ext;
 				File copy = new File(path+filename);
-				result = mapper.fileInsert(boardnum, filename);
+				dto.setFreeboardnum(boardnum);
+				dto.setFilename(filename);
+				boardFileJPA.save(dto.toBoardFileEntity());
+				result++;
 				try {
 					file.transferTo(copy);
 				} catch (Exception e) {
@@ -127,12 +147,34 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<FreeBoardFileDTO> findImg(int boardnum) {
-		return mapper.findImg(boardnum);
+	public List<BoardFileDTO> findImg(int freeboardnum) {
+		List<BoardFileEntity> entityList = boardFileJPA.findByFreeboardnum(freeboardnum); 
+		List<BoardFileDTO> list = new ArrayList<BoardFileDTO>();
+		for (BoardFileEntity entity : entityList) {
+			BoardFileDTO dto = entity.toBoardFileDTO();
+			list.add(dto);
+		}
+		
+		return list;
 	}
 
 	@Override
 	public List<BoardDTO> findAllRef(int ref) {
-		return mapper.findAllRef(ref);
+		return null;
+	}
+
+	@Override
+	public List<BoardFileDTO> fileList(int freeboardnum) {
+		List<BoardFileEntity> entityList = null;
+		List<BoardFileDTO> fileList = null;
+		entityList = boardFileJPA.findByFreeboardnum(freeboardnum);
+		if(entityList.size()>0) {
+			fileList = new ArrayList<BoardFileDTO>();
+			for (BoardFileEntity entity : entityList) {
+				BoardFileDTO dto = entity.toBoardFileDTO();
+				fileList.add(dto);
+			}
+		}
+		return null;
 	}
 }

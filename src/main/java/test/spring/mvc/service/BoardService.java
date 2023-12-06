@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import test.spring.mvc.bean.BoardDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 import test.spring.mvc.bean.FreeBoardFileDTO;
 
 public interface BoardService {
@@ -18,6 +19,7 @@ public interface BoardService {
 	public BoardDTO update(int num);
 	public int updateArticle(BoardDTO dto);
 	public int deleteArticle(int num, String passwd);
-	public List<FreeBoardFileDTO> findImg(int boardnum);
+	public List<BoardFileDTO> findImg(int freeboardnum);
 	public List<BoardDTO> findAllRef(int ref);
+	public List<BoardFileDTO> fileList(int freeboardnum);
 }

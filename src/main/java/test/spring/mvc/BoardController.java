@@ -14,9 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import test.spring.mvc.bean.BoardDTO;
-import test.spring.mvc.bean.FreeBoardFileDTO;
+import test.spring.mvc.bean.BoardFileDTO;
 import test.spring.mvc.service.BoardService;
 
 @Controller
@@ -69,9 +70,10 @@ public class BoardController {
 	@RequestMapping("content")
 	public String content(Model model, int num, int pageNum) {
 		BoardDTO dto = boardServiceImpl.readContent(num);
-		List<FreeBoardFileDTO> imgList = boardServiceImpl.findImg(num);
-		model.addAttribute("article", dto);
+		List<BoardFileDTO> imgList = boardServiceImpl.findImg(num);
+		model.addAttribute("dto", dto);
 		model.addAttribute("pageNum", pageNum);
+		logger.info("====imgList===>"+imgList);
 		model.addAttribute("imgList", imgList);
 		return "/board/content";
 	}
@@ -102,9 +104,9 @@ public class BoardController {
 	@RequestMapping("deletePro")
 	public String deletePro(HttpServletRequest request, Model model, int num, String passwd, int pageNum) {
 		int check = 0;
-		List<FreeBoardFileDTO> list = boardServiceImpl.findImg(num);
+		List<BoardFileDTO> list = boardServiceImpl.findImg(num);
 		String path = request.getServletContext().getRealPath("/resources/file/board/");
-		for (FreeBoardFileDTO dto : list) {
+		for (BoardFileDTO dto : list) {
 			File file = new File(path+dto.getFilename());
 			if(file.isFile()) {
 				file.delete();
@@ -115,5 +117,14 @@ public class BoardController {
 		model.addAttribute("pageNum", pageNum);
 		return "/board/deletePro";
 	}
+	
+	@RequestMapping("download")
+	   public ModelAndView download(HttpServletRequest request, String filename) {
+	      String filePath = request.getServletContext().getRealPath("/resources/file/board/");
+	      File file = new File(filePath+filename);
+	      ModelAndView mv = new ModelAndView("downView","downFile",file);
+	      
+	      return mv;
+	   }
 	
 }
