@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import test.spring.mvc.bean.SampleDTO;
+import test.spring.mvc.service.SampleServiceImpl;
 
 /**
  * form.jsp -> main.jsp·Î parameter¸¦ º¸³»´Â Å¬·¡½º
@@ -26,6 +28,16 @@ import test.spring.mvc.bean.SampleDTO;
 public class SampleController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
+	
+	@Autowired
+	private SampleServiceImpl service;
+	
+	@RequestMapping("tx")
+	public @ResponseBody String tx() {
+		String data = "¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ¼­Á¤·æ";
+		service.add(data);
+		return "transaction success!!";
+	}
 	
 	@RequestMapping("main.do")
 	public String main(
