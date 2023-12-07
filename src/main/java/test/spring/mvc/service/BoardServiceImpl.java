@@ -89,6 +89,7 @@ public class BoardServiceImpl implements BoardService{
 			dto.setRe_step(number);
 		}
 		dto.setReg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setNum(0);
 		boardJPA.save(dto.toBoardEntity());
 	}
 
