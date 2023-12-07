@@ -14,6 +14,7 @@ public interface MemberService {
 	public MemberDTO getUser(String id);
 	public void userUpdate(MemberDTO dto);
 	public int userDelete(String id, String passwd);
+	public int confirmId(String id);
 	public int isAdmin(String id);
 	public List<MemberDTO> showAll();
 	public String userStatus(int status);

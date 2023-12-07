@@ -52,6 +52,24 @@ public class MemberController {
 		return "redirect:/user/main.me";
 	}
 	
+	@RequestMapping("inputForm.me")
+	public String input() {
+		return "member/inputForm";
+	}
+	
+	@RequestMapping("confirmId.me")
+	public String confirmId(String id, Model model) {
+		int check = memberServiceImpl.confirmId(id);
+		model.addAttribute("check", check);
+		return "member/confirmId";
+	}
+
+	@RequestMapping("inputPro.me")
+	public String inputPro(MemberDTO dto) {
+		memberServiceImpl.userInput(dto);
+		return "member/inputPro";
+	}
+	
 	@RequestMapping("modify.me")
 	public String modify(HttpSession session, Model model) {
 		String id = (String) session.getAttribute("memId");
@@ -111,14 +129,6 @@ public class MemberController {
 		model.addAttribute("userList", userList);
 		model.addAttribute("gradeList", gradeList);
 		return "member/adminShowUsers";
-	}
-	
-	@RequestMapping("adminModifyUsersForm.me")
-	public String adminModifyUsersForm( String id, Model model) {
-		List<GradeDTO> list = memberServiceImpl.allStatus();
-		model.addAttribute("gradeList", list);
-		model.addAttribute("id", id);
-		return "member/adminModifyUsersForm";
 	}
 	
 	@RequestMapping("adminModifyUsersPro.me")

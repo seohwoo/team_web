@@ -73,7 +73,6 @@ public class BoardController {
 		List<BoardFileDTO> imgList = boardServiceImpl.findImg(num);
 		model.addAttribute("dto", dto);
 		model.addAttribute("pageNum", pageNum);
-		logger.info("====imgList===>"+imgList);
 		model.addAttribute("imgList", imgList);
 		return "/board/content";
 	}
@@ -106,10 +105,12 @@ public class BoardController {
 		int check = 0;
 		List<BoardFileDTO> list = boardServiceImpl.findImg(num);
 		String path = request.getServletContext().getRealPath("/resources/file/board/");
-		for (BoardFileDTO dto : list) {
-			File file = new File(path+dto.getFilename());
-			if(file.isFile()) {
-				file.delete();
+		if(list != null) {
+			for (BoardFileDTO dto : list) {
+				File file = new File(path+dto.getFilename());
+				if(file.isFile()) {
+					file.delete();
+				}
 			}
 		}
 		check = boardServiceImpl.deleteArticle(num, passwd);

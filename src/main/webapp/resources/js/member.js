@@ -92,6 +92,6 @@ function openConfirmid(userinput) {
     url = "/user/confirmId.me?id="+userinput.id.value ;
     
     // 새로운 윈도우를 엽니다.
-    open(url, "confirm",  "toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=300, height=200");
+    open(url, "confirmId",  "toolbar=no, location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=300, height=200");
 }
 

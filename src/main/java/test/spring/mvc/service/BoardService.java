@@ -21,5 +21,4 @@ public interface BoardService {
 	public int deleteArticle(int num, String passwd);
 	public List<BoardFileDTO> findImg(int freeboardnum);
 	public List<BoardDTO> findAllRef(int ref);
-	public List<BoardFileDTO> fileList(int freeboardnum);
 }

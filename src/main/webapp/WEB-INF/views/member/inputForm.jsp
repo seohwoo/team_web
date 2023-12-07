@@ -23,7 +23,7 @@
       <td width="200"> 사용자 ID</td>
       <td width="400"> 
         <input type="text" name="id" size="10" maxlength="12">
-        <input type="button" name="confirm_id" value="ID중복확인" 
+        <input type="button" name="confirmId" value="ID중복확인" 
         			        OnClick="openConfirmid(this.form)">
       </td>
     </tr>

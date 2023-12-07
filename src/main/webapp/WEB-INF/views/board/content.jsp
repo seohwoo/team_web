@@ -30,16 +30,19 @@
 				    <td bgcolor="${value_c}">글내용</td>
 				    <td><pre>${dto.content}</pre></td>
 				  </tr>
-				    <c:if test="${dto.isfile>0 }">
 				  		<tr>
 					    	<td bgcolor="${value_c}">첨부파일</td>
-							   <td>
+							<td>
+				   			 <c:if test="${dto.isfile>0 }">
 					    		<c:forEach var="file" items="${imgList }">
-							    	<a href="/free/download?filename=${file.filename }">${file.filename}</a> <br />
+					    			<img src="/resources/file/board/${file.filename}" width="100px" height="100px"/>
 					    		</c:forEach>
-							  </td>
+				    		</c:if>
+				   			 <c:if test="${dto.isfile==0 }">
+					    		<img src="/resources/file/board/default.jpg" width="100px" height="100px"/>
+				    		</c:if>
+							</td>
 				  		</tr>
-				    </c:if>
 				  <tr>
 				    <td bgcolor="${value_c}">조회수</td>
 				    <td>${dto.readcount}</td>

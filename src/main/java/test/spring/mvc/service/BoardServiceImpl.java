@@ -85,6 +85,7 @@ public class BoardServiceImpl implements BoardService{
 			dto.setRe_step(number);
 		}
 		dto.setReg_date(new Timestamp(System.currentTimeMillis()));
+		dto.setNum(0);
 		boardJPA.save(dto.toBoardEntity());
 	}
 
@@ -149,12 +150,14 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardFileDTO> findImg(int freeboardnum) {
 		List<BoardFileEntity> entityList = boardFileJPA.findByFreeboardnum(freeboardnum); 
-		List<BoardFileDTO> list = new ArrayList<BoardFileDTO>();
-		for (BoardFileEntity entity : entityList) {
-			BoardFileDTO dto = entity.toBoardFileDTO();
-			list.add(dto);
+		List<BoardFileDTO> list = null;
+		if(entityList.size() >0) {
+			list = new ArrayList<BoardFileDTO>();
+			for (BoardFileEntity entity : entityList) {
+				BoardFileDTO dto = entity.toBoardFileDTO();
+				list.add(dto);
+			}
 		}
-		
 		return list;
 	}
 
@@ -163,18 +166,5 @@ public class BoardServiceImpl implements BoardService{
 		return null;
 	}
 
-	@Override
-	public List<BoardFileDTO> fileList(int freeboardnum) {
-		List<BoardFileEntity> entityList = null;
-		List<BoardFileDTO> fileList = null;
-		entityList = boardFileJPA.findByFreeboardnum(freeboardnum);
-		if(entityList.size()>0) {
-			fileList = new ArrayList<BoardFileDTO>();
-			for (BoardFileEntity entity : entityList) {
-				BoardFileDTO dto = entity.toBoardFileDTO();
-				fileList.add(dto);
-			}
-		}
-		return null;
-	}
+	
 }
